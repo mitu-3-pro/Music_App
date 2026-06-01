@@ -50,9 +50,8 @@ dependencies {
     // OkHttp
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
-    // Glide
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+    // Picasso Image Loading
+    implementation("com.squareup.picasso:picasso:2.8")
 
     // RecyclerView
     implementation("androidx.recyclerview:recyclerview:1.4.0")
@@ -79,7 +78,4 @@ dependencies {
 
     // ConstraintLayout
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
-
-    // Glide OkHttp Integration
-    implementation("com.github.bumptech.glide:okhttp3-integration:4.16.0")
 }

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 import com.example.api1.R
 
 class DetailsActivity : AppCompatActivity() {
@@ -32,14 +32,16 @@ class DetailsActivity : AppCompatActivity() {
         val location =
             intent.getStringExtra("location")
 
-        txtThemeName.text =
-            themeName
+        txtThemeName.text = themeName
 
-        txtLocation.text =
-            "Location:\n$location"
+        txtLocation.text = getString(R.string.location_format, location)
 
-        Glide.with(this)
-            .load(imageUrl)
-            .into(imgTheme)
+        if (!imageUrl.isNullOrEmpty()) {
+            Picasso.get()
+                .load(imageUrl)
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background)
+                .into(imgTheme)
+        }
     }
 }

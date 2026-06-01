@@ -9,12 +9,11 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.api1.R
 import com.example.api1.model.ThemeItem
 import com.example.api1.ui.DetailsActivity
 import android.util.Log
+import com.squareup.picasso.Picasso
 
 class ThemeAdapter(
     private val context: Context,
@@ -71,15 +70,22 @@ class ThemeAdapter(
             IMAGE_BASE_URL + theme.Thumnail_Small
         }
 
-        Log.d("ThemeAdapter", "Position: $position, Theme: ${theme.Theme_Name}, Image: $imageUrl")
+        Log.d("ThemeAdapter", "Position: $position")
+        Log.d("ThemeAdapter", "Theme: ${theme.Theme_Name}")
+        Log.d("ThemeAdapter", "Image URL: $imageUrl")
 
-        // Load image with Glide
-        Glide.with(context)
-            .load(imageUrl)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .placeholder(R.drawable.ic_launcher_background)
-            .error(R.drawable.ic_launcher_background)
-            .into(holder.imgTheme)
+        // Load image using Picasso
+        try {
+            Picasso.get()
+                .load(imageUrl)
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background)
+                .into(holder.imgTheme)
+            Log.d("ThemeAdapter", "Picasso loading image successfully")
+        } catch (e: Exception) {
+            Log.e("ThemeAdapter", "Error loading image with Picasso: ${e.message}")
+            e.printStackTrace()
+        }
 
         // Image click - go to details
         holder.imgTheme.setOnClickListener {

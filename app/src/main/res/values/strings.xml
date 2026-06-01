@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">api1</string>
+    <string name="app_name">Music App</string>
+    <string name="not_downloaded">Not Downloaded</string>
+    <string name="download_theme">Download</string>
+    <string name="play_theme">Play</string>
+    <string name="theme_details">Theme Details</string>
 </resources>

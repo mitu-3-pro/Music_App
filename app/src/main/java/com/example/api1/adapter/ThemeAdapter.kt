@@ -22,7 +22,7 @@ class ThemeAdapter(
 
     companion object {
         private const val IMAGE_BASE_URL =
-            "https://pkmaster-cdn.qtonzapps.in/fullscreen/image/"
+            "https://pkmaster-cdn.qtonzapps.in/fullscreen/thumnail_small/"
     }
 
     inner class ThemeViewHolder(
@@ -63,7 +63,7 @@ class ThemeAdapter(
         // Set the song/theme name
         holder.txtSongName.text = theme.SoundName ?: theme.Theme_Name
 
-        // Build the full image URL
+        // Build the full image URL with correct path
         val imageUrl = if (theme.Thumnail_Small.isNullOrEmpty()) {
             IMAGE_BASE_URL + theme.Thumnail_Big
         } else {
@@ -92,7 +92,7 @@ class ThemeAdapter(
             val intent = Intent(context, DetailsActivity::class.java)
             intent.putExtra("image", imageUrl)
             intent.putExtra("name", theme.Theme_Name)
-            intent.putExtra("location", "Not Downloaded")
+            intent.putExtra("location", context.getString(R.string.not_downloaded))
             context.startActivity(intent)
         }
 

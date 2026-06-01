@@ -11,10 +11,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.example.api1.R
 import com.example.api1.model.ThemeItem
 import com.example.api1.ui.DetailsActivity
+import android.util.Log
 
 class ThemeAdapter(
     private val context: Context,
@@ -65,24 +65,21 @@ class ThemeAdapter(
         holder.txtSongName.text = theme.SoundName ?: theme.Theme_Name
 
         // Build the full image URL
-        val imageUrl = IMAGE_BASE_URL + theme.Thumnail_Small
+        val imageUrl = if (theme.Thumnail_Small.isNullOrEmpty()) {
+            IMAGE_BASE_URL + theme.Thumnail_Big
+        } else {
+            IMAGE_BASE_URL + theme.Thumnail_Small
+        }
 
-        android.util.Log.d("ThemeAdapter", "Loading image: $imageUrl")
+        Log.d("ThemeAdapter", "Position: $position, Theme: ${theme.Theme_Name}, Image: $imageUrl")
 
-        // Load image with Glide - with better options
-        val options = RequestOptions()
+        // Load image with Glide
+        Glide.with(context)
+            .load(imageUrl)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .placeholder(R.drawable.ic_launcher_background)
             .error(R.drawable.ic_launcher_background)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-
-        try {
-            Glide.with(context)
-                .load(imageUrl)
-                .apply(options)
-                .into(holder.imgTheme)
-        } catch (e: Exception) {
-            android.util.Log.e("ThemeAdapter", "Error loading image: ${e.message}")
-        }
+            .into(holder.imgTheme)
 
         // Image click - go to details
         holder.imgTheme.setOnClickListener {
@@ -95,12 +92,12 @@ class ThemeAdapter(
 
         // Download button
         holder.btnDownload.setOnClickListener {
-            android.util.Log.d("ThemeAdapter", "Download: ${theme.SoundName}")
+            Log.d("ThemeAdapter", "Download: ${theme.SoundName}")
         }
 
         // Play button
         holder.btnPlay.setOnClickListener {
-            android.util.Log.d("ThemeAdapter", "Play: ${theme.SoundName}")
+            Log.d("ThemeAdapter", "Play: ${theme.SoundName}")
         }
     }
 
